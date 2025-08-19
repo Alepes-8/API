@@ -1,0 +1,5 @@
+swagger-ui/
+  dist/
+    index.html
+    swagger-initializer.js
+  openapi.yaml

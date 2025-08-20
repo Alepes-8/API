@@ -1,0 +1,23 @@
+openapi: 3.0.3
+info:
+  title: My API
+  description: A brief description of your API
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+
+paths:
+  # instead of redefining the recipes paths,
+  # pull them in from the other openapi.yaml file
+  /recipes:
+    $ref: '/docs/recipe_api.yaml#/paths/~1recipes'
+    
+  /recipes/{id}:
+      $ref: '/docs/recipe_api.yaml#/paths/~1recipes~1{id}'
+components:
+  schemas:
+    GenericObject:
+      type: object
+      additionalProperties: true

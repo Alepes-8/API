@@ -49,18 +49,4 @@ Setting up a new api is done with the following setup
 
 The recipe_manager_api handles the creation and deletion and look up of recpies through a local dbmongo database. So in this it is important to know how to work the different components
 
-- How to start it
-    1. open power shell or terminal as admin
-    2. Run mongod to start MongoDB server
-    3. in a new terminal, run "node server.js" to start the server, this should be inside the recipe_manager_api folder.
-    4. In Postman, test the API endpoints
-        1. open postman 
-        2. Set the request type to POST
-        3. Enter the URL http://localhost:5000/api/recipes
-        4. In the body tab, select raw and set the type to JSON
-        5. Enter a JSON object like: {
-            "title": "Spaghetti Carbonara",
-            "ingredients": ["Pasta", "Eggs", "Bacon"],
-            "instructions": "Boil pasta, fry bacon, mix with eggs.",
-            "category": "Italian"
-        }
+How to run, check the how_to_run.md file.

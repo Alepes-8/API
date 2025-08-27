@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
-import recipeRoutes from "./routes/RecipeRoutes.js";
+import recipeRoutes from "./routes/recipeRoutes.js";
 
 // ------------ Installation and setup ------------
 // 1. open power shell or terminal as admin

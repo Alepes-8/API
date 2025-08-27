@@ -1,0 +1,73 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# JetBrains (IntelliJ, PyCharm, WebStorm)
+.idea/
+*.iml
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+
+# Node.js
+node_modules/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+venv/
+
+# Java/Maven
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Ruby
+.bundle/
+vendor/bundle/
+
+# General
+*.log
+*.tmp
+*.out
+*.o
+*.exe
+*.dll
+
+# Docker
+docker-compose.override.yml
+.env
+.env.local
+.env.*.local
+config/secrets.yml
+
+
+/docs/generated/
+/reports/
+/coverage/
+
+
+*.bak
+*.swp
+*.swo
+*.tmp

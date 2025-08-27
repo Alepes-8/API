@@ -1,0 +1,108 @@
+openapi: 3.0.3
+info:
+  title: Recipe Manager API
+  description: API for managing recipes
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:5000/api
+    description: API server for recipe manager
+    
+paths:
+  /recipes:
+    get:
+      summary: Get all recipes
+      tags: [Recipe manager]
+      responses:
+        '200':
+          description: A list of recipes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Recipe'
+    post:
+      summary: Create a new recipe
+      tags: [Recipe manager]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeInput'
+      responses:
+        '201':
+          description: Recipe created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
+
+  /recipes/:id:
+    get:
+      summary: Get a recipe by ID
+      tags: [Recipe manager]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A single recipe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
+        '404':
+          description: Recipe not found
+    delete:
+      summary: Delete a recipe by ID
+      tags: [Recipe manager]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Recipe deleted
+        '404':
+          description: Recipe not found
+
+components:
+  schemas:
+    Recipe:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Spaghetti Bolognese"
+        ingredients:
+          type: array
+          items:
+            type: string
+          example: ["pasta", "tomato sauce", "ground beef"]
+        instructions:
+          type: string
+          example: "Boil pasta, cook sauce, mix together"
+    RecipeInput:
+      type: object
+      properties:
+        name:
+          type: string
+        ingredients:
+          type: array
+          items:
+            type: string
+        instructions:
+          type: string
+      required:
+        - name
+        - ingredients

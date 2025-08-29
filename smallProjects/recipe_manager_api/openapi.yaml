@@ -7,7 +7,6 @@ info:
 servers:
   - url: http://localhost:5000/api
     description: API server for recipe manager
-    
 paths:
   /recipes:
     get:
@@ -38,8 +37,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Recipe'
-
-  /recipes/:id:
+  /recipes/{id}:
     get:
       summary: Get a recipe by ID
       tags: [Recipe manager]
@@ -52,6 +50,30 @@ paths:
       responses:
         '200':
           description: A single recipe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
+        '404':
+          description: Recipe not found
+    put:
+      summary: Update a recipe by ID
+      tags: [Recipe manager]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeInput'
+      responses:
+        '200': 
+          description: A single recipe is updated
           content:
             application/json:
               schema:
@@ -72,7 +94,6 @@ paths:
           description: Recipe deleted
         '404':
           description: Recipe not found
-
 components:
   schemas:
     Recipe:
@@ -81,7 +102,7 @@ components:
         id:
           type: integer
           example: 1
-        name:
+        title:
           type: string
           example: "Spaghetti Bolognese"
         ingredients:
@@ -95,7 +116,7 @@ components:
     RecipeInput:
       type: object
       properties:
-        name:
+        title:
           type: string
         ingredients:
           type: array

@@ -17,7 +17,7 @@ Running the swagger-UI will allow the user to open the local enivronments and ex
 - How to start it
     1. open power shell or terminal as admin but make sure it is just in the normal opening, as it is dependent on finding the mongodb setup on the computer
     2. Run "mongod" to start MongoDB server
-    3. in a new terminal, run "node server.js" to start the server, this should be inside the recipe_manager_api folder.
+    3. in a new terminal in the smallProjects\recipe_manager_apifolder run "node server.js" to start the server, this should be inside the recipe_manager_api folder.
     4. In Postman, test the API endpoints
         1. open postman 
         2. Set the request type to POST

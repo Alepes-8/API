@@ -9,14 +9,21 @@ servers:
     description: Base server
   - url: http://localhost:5000/api
     description: API server for recipe manager
+  - url: http://localhost:5001/api
+    description: API server for task manager
 paths:
   # instead of redefining the recipes paths,
   # pull them in from the other openapi.yaml file
   /recipes:
     $ref: '/docs/recipe_api.yaml#/paths/~1recipes'
-    
-  /recipes/:id:
-      $ref: '/docs/recipe_api.yaml#/paths/~1recipes~1:id'
+
+  /recipes/{id}:
+      $ref: '/docs/recipe_api.yaml#/paths/~1recipes~1{id}'
+
+  /tasks:
+    $ref: '/docs/task_api.yaml#/paths/~1tasks'
+  /tasks/{id}:
+    $ref: '/docs/task_api.yaml#/paths/~1tasks~1{id}'
 components:
   schemas:
     GenericObject:

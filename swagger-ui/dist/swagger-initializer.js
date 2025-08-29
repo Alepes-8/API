@@ -4,8 +4,9 @@ window.onload = function() {
   // the following lines will be replaced by docker/configurator, when it runs in a docker-container
   window.ui = SwaggerUIBundle({
   urls: [
-    { url: "/docs/openapi.yaml", name: "Main API" },
-    { url: "/docs/recipe_api.yaml", name: "Recipe API" }
+    { url: "/docs/combined.yaml", name: "Main API" },
+    { url: "/docs/recipe_api.yaml", name: "Recipe API" },
+    { url: "/docs/task_api.yaml", name: "Task API" }
     ],
     dom_id: '#swagger-ui',
     deepLinking: true,

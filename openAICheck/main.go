@@ -14,7 +14,7 @@ func main() {
 	// Serve OpenAPI YAML file
 	// The path to the OpenAPI YAML file is relative to the main.go file
 	// If issues occur, it can bve with swagger-initializer.js in the swagger-ui/dist folder
-	http.HandleFunc("/docs/openapi.yaml", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/docs/combined.yaml", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Cache-Control", "no-store")       // prevent browser caching
 		http.ServeFile(w, r, "../openapis/combined.yaml") // path relative to main.go
 	})
@@ -22,6 +22,11 @@ func main() {
 	http.HandleFunc("/docs/recipe_api.yaml", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Cache-Control", "no-store")
 		http.ServeFile(w, r, "../smallProjects/recipe_manager_api/openapi.yaml")
+	})
+
+	http.HandleFunc("/docs/task_api.yaml", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Cache-Control", "no-store")
+		http.ServeFile(w, r, "../smallProjects/task_tracker_api/openapi.yaml")
 	})
 
 	// Serve Swagger UI static files

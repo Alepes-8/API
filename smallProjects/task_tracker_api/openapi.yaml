@@ -1,0 +1,30 @@
+openapi: 3.0.3
+info:
+    title: Task Manager API
+    description: API for managing Tasks
+    version: 1.0.0
+
+servers: 
+    - url: http://localhost:5001/api
+    description: API server for task manager
+
+paths:
+    /tasks:
+        post:
+            summary: Create a task
+            tags
+        get:
+            summary: Fetch every task
+            tags: [Task manager]
+            responses:
+    /tasks/{id}:
+        get: 
+            summary: Fetch task with specific id
+            tags: [Task manager]
+        put:
+            summary: Update the task
+            tags: [Task manager]
+        delete:
+            summary: Delete the task
+            tags: [Task manager]
+components:

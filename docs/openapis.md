@@ -27,6 +27,7 @@ When setting up a new openapi, for a new or old api it is important to note that
 Setting up a new api is done with the following setup
 1. create an openapi.yaml inside the project API that is create
     - this includes any paths that is required and any other form of information that is desired.
+    - Make sure it is built up with responses and basicly a finished one, as otherwise it may give errors.
 2. Create a function handler inside of the main.go file
     - Create one following the structure that already exist for the file.
     - adjust the 'http.HandleFunc("/docs/openapi.yaml"...' to a name that represent the apis own project, such as docs/expense_counter.yaml. 
@@ -42,6 +43,7 @@ Setting up a new api is done with the following setup
         1. the name created in the handlefunc isn't the same in both the swagger-initializer and the ref in the combined.yaml file.
         2. the openapi.yaml isn't correctly written, or that it doesn't contain any paths to begin with.
         3. some time it cashes the information from a previous instance, reload page or restart the swagger-ui.
+        4. the openapi.yaml isn't finished and it can cause error as it doesn't have the information needed to run and show data.
 
 ## existing apis
 

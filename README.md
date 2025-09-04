@@ -4,6 +4,9 @@ This project is created in order to create different apis, that can be used and 
 
 If more information is desired read the documents that exist in the docs file, as here documentations will explain different elements of system.
 
+This is the current look and content contained in the project(visualised by swagger UI).
+<img width="1192" height="1263" alt="bild" src="https://github.com/user-attachments/assets/084f35dd-83a9-4834-9be4-beb4b16328a3" />
+
 # How to setup and install.
 1. Open a teminal where you desire to setup the project.
 2. run the following commands in the given order

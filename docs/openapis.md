@@ -52,3 +52,9 @@ Setting up a new api is done with the following setup
 The recipe_manager_api handles the creation and deletion and look up of recpies through a local dbmongo database. So in this it is important to know how to work the different components
 
 How to run, check the how_to_run.md file.
+
+### task_tracker_api
+
+The task_tracker_api handles the creation and adjustements of tasks through a local dbmongo database. However, in order to do any adjustment to the task_tracker_api it is required that one has the authentication to do so. The api also handles the creation of a user, and then the login of set user in order to get respsective authentication bearer token that is required to create a task, and or any other adjustments on the tasks.
+
+How to run, check the how_to_run.md file.

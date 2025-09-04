@@ -17,7 +17,7 @@ Running the swagger-UI will allow the user to open the local enivronments and ex
 - How to start it
     1. open power shell or terminal as admin but make sure it is just in the normal opening, as it is dependent on finding the mongodb setup on the computer
     2. Run "mongod" to start MongoDB server
-    3. in a new terminal in the smallProjects\recipe_manager_apifolder run "node server.js" to start the server, this should be inside the recipe_manager_api folder.
+    3. in a new terminal in the smallProjects\recipe_manager_api folder run "node server.js" to start the server, this should be inside the recipe_manager_api folder.
     4. In Postman, test the API endpoints
         1. open postman 
         2. Set the request type to POST
@@ -29,3 +29,24 @@ Running the swagger-UI will allow the user to open the local enivronments and ex
             "instructions": "Boil pasta, fry bacon, mix with eggs.",
             "category": "Italian"
         }
+
+### task_tracker_api
+
+- How to start it.
+    1. open power shell or terminal as admin but make sure it is just in the normal opening, as it is dependent on finding the mongodb setup on the computer
+    2. Run "mongod" to start MongoDB server
+    3. in a new terminal in the smallProjects\task_tracker_api folder run "node server.js" to start the server, this should be inside the task_tracker_api folder.
+    4. In Postman, test the API endpoints
+        1. open postman 
+        2. Set the request type to POST
+        3. Enter the URL http://localhost:5001/api/auth/register
+        4. In the body tab, select raw and set the type to JSON
+        5. Enter a JSON object like: {
+            "email": "test@example.localhost",
+            "password": "123test"
+        }
+        6. repeate step 4.2 - 4.5 but with http://localhost:5001/api/auth/login
+            - keep eamil and password the same
+        7. Copy the response token, locate the authentication tab for the postman collection, select "bearer token" and enter the token from the response.
+        8. repeate step 4.2-4.4 but with http://localhost:5001/api/auth/login
+            - body should follow this structure [text](../smallProjects/task_tracker_api/models/task.js)

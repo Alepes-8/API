@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import taskRoutes from "./routes/taskRoutes.js";
+import authRoutes from "./routes/authRoutes.js"
 
 // Load environment variables from .env file
 dotenv.config();
@@ -27,4 +28,5 @@ mongoose.connect(process.env.MONGO_URI)
   .catch(err => console.error(err));
 
 //Hook up task routes into server from the routes/taskRoutes.js file
+app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);

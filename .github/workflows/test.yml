@@ -30,10 +30,22 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
+        working-directory: ./smallProjects/task_tracker_api
+        run: npm install
+      
+      - name: Run dependencies
+        working-directory: ./smallProjects/recipe_manager_api
         run: npm install
 
-      - name: Run API tests with Newman
+      - name: Run Task Tracker API tests with Newman
+        working-directory: ./smallProjects/task_tracker_api
         run: |
           npm install -g newman
-          newman run postman/TaskAPI.postman_collection.json \
-            --environment postman/local.postman_environment.json
+          newman run postman/Task_tracker.postman_collection.json \ --environment postman/local.postman_environment.json
+
+      - name: Run Recipe Manager API tests with Newman
+        working-directory: ./smallProjects/recipe_manager_api
+        run: |
+          npm install -g newman
+          newman run postman/Recipe_Manager.postman_collection.json
+          newman run postman/Recipe_Manager_error_handling.postman_collection.json

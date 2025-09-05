@@ -1,0 +1,51 @@
+name: CI for Task/Recipe APIs
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    services:
+      mongo:
+        image: mongo:5.0
+        ports: ['27017:27017']
+        options: >-
+          --health-cmd="mongosh --eval 'db.adminCommand(\"ping\")'"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        working-directory: ./smallProjects/task_tracker_api
+        run: npm install
+      
+      - name: Run dependencies
+        working-directory: ./smallProjects/recipe_manager_api
+        run: npm install
+
+      - name: Run Task Tracker API tests with Newman
+        working-directory: ./smallProjects/task_tracker_api
+        run: |
+          npm install -g newman
+          newman run postman/Task_tracker.postman_collection.json \ --environment postman/local.postman_environment.json
+
+      - name: Run Recipe Manager API tests with Newman
+        working-directory: ./smallProjects/recipe_manager_api
+        run: |
+          npm install -g newman
+          newman run postman/Recipe_Manager.postman_collection.json
+          newman run postman/Recipe_Manager_error_handling.postman_collection.json

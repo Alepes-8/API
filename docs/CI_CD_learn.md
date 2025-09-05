@@ -1,0 +1,3 @@
+#CI CD GITHUB
+
+When creating a worklflow in github, you should create a a sepereate folder called ".github" which is different from the ".git" in where that should never be manually adjusted while ".github" should. It is created as GitHub recognizes this special folder for community health files (issue templates, PR templates, etc.) and CI/CD workflows. So for the CI/CD process create a workflows folder in it as well.

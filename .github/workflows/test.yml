@@ -40,6 +40,14 @@ jobs:
         working-directory: ./smallProjects/recipe_manager_api
         run: npm install
 
+      - name: Start Task Tracker API
+        working-directory: ./smallProjects/task_tracker_api
+        run: node server.js &
+
+      - name: Start Recipe Manager API
+        working-directory: ./smallProjects/recipe_manager_api
+        run: node server.js &
+
       - name: Run Task Tracker API tests with Newman
         working-directory: ./smallProjects/task_tracker_api
         run: |

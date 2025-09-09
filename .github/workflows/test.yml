@@ -14,8 +14,13 @@ jobs:
     
     services:
       mongo:
-        image: mongo:6.0
+        image: mongo:5.0
         ports: ['27017:27017']
+        options: >-
+          --health-cmd="mongosh --eval 'db.adminCommand(\"ping\")'"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
 
     steps:
       - name: Checkout code
@@ -53,11 +58,23 @@ jobs:
         run: |
           npx wait-on --timeout 30000 http://localhost:5001/api/health
 
-      - name: Start Recipe Manager API
+
+      - name: Start Task Tracker API
         working-directory: ./smallProjects/recipe_manager_api
         run: |
           npm install -g wait-on
-          node server.js > server.log 2>&1 &
+          node server.js > server.log 2>&1 & 
+
+
+      - name: Debug API startup
+        working-directory: ./smallProjects/recipe_manager_api
+        run: |
+          sleep 5
+          cat server.log
+
+      - name: Wait for Task Tracker API
+        working-directory: ./smallProjects/recipe_manager_api
+        run: |
           npx wait-on --timeout 30000 http://localhost:5000/api/health
 
       - name: Run Task Tracker API tests with Newman

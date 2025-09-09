@@ -1,59 +1,59 @@
-name: CI for Task/Recipe APIs
+name: CI/CD Test
 
 on:
-  workflow_dispatch:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
-  repository_dispatch:
-    types: [rerun-ci]
+    branches:
+      - main
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+
     services:
       mongo:
-        image: mongo:5.0
-        ports: ['27017:27017']
-        options: >-
-          --health-cmd="mongosh --eval 'db.adminCommand(\"ping\")'"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
-    
+        image: mongo:6.0   # Docker image for MongoDB
+        ports:
+          - 27017:27017
+        options: > 
+          --health-cmd "mongosh --eval 'db.adminCommand(\"ping\")'" 
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: '20'
 
       - name: Install dependencies
-        working-directory: ./smallProjects/task_tracker_api
         run: npm install
-      
-      - name: Run dependencies
-        working-directory: ./smallProjects/recipe_manager_api
-        run: npm install
+
+      - name: Wait for MongoDB to be ready
+        run: |
+          until mongo --eval "print(\"MongoDB is ready\")"; do
+            echo "Waiting for MongoDB..."
+            sleep 5
+          done
+          sleep 5  # Extra wait time to ensure MongoDB is fully ready
 
       - name: Start Task Tracker API
         working-directory: ./smallProjects/task_tracker_api
-        run: node server.js &
+        run: /
+          node server.js &
+          sleep 10
 
       - name: Start Recipe Manager API
         working-directory: ./smallProjects/recipe_manager_api
-        run: node server.js &
-
-      - name: Wait for APIs to be ready
-        run: |
-          echo "⏳ Waiting for APIs..."
+        run: /
+          node server.js &
           sleep 10
-          curl -f http://localhost:5000/api || exit 1
-          curl -f http://localhost:5001/api || exit 1
 
       - name: Run Task Tracker API tests with Newman
         working-directory: ./smallProjects/task_tracker_api

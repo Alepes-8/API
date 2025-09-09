@@ -40,6 +40,22 @@ jobs:
         working-directory: ./smallProjects/recipe_manager_api
         run: npm install
 
+      - name: start MongoDB service
+        run: mongod
+
+      - name: Wait for MongoDB to be ready
+        run: |
+          for i in {1..10}; do
+            if mongo --host localhost --port 27017 --eval "db.adminCommand('ping')" &>/dev/null; then
+              echo "MongoDB is up!"
+              exit 0
+            fi
+            echo "Waiting for MongoDB..."
+            sleep 5
+          done
+          echo "MongoDB did not start in time."
+          exit 1
+
       - name: Start Task Tracker API
         working-directory: ./smallProjects/task_tracker_api
         run: node server.js &

@@ -35,19 +35,30 @@ jobs:
             sleep 2
           done
 
+
+      - name: Start Task Tracker API
+        working-directory: ./smallProjects/task_tracker_api
+        run: |
+          npm install -g wait-on
+          node server.js > server.log 2>&1 &
+
+      - name: Debug API startup
+        working-directory: ./smallProjects/task_tracker_api
+        run: |
+          sleep 5
+          cat server.log
+
+      - name: Wait for Task Tracker API
+        working-directory: ./smallProjects/task_tracker_api
+        run: |
+          npx wait-on --timeout 30000 http://localhost:5001/api/tasks
+
       - name: Start Recipe Manager API
         working-directory: ./smallProjects/recipe_manager_api
         run: |
           npm install -g wait-on
           node server.js > server.log 2>&1 &
           npx wait-on --timeout 30000 http://localhost:5000/api/recipes
-
-      - name: Start Task Tracker API
-        working-directory: ./smallProjects/task_tracker_api
-        run: |
-          npm install
-          node server.js > server.log 2>&1 &
-          npx wait-on --timeout 30000 http://localhost:5001/api/tasks
 
       - name: Run Task Tracker API tests with Newman
         working-directory: ./smallProjects/task_tracker_api

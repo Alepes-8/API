@@ -26,14 +26,6 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install Task Tracker API dependencies
-        working-directory: ./smallProjects/task_tracker_api
-        run: npm install
-
-      - name: Install Recipe Manager API dependencies
-        working-directory: ./smallProjects/recipe_manager_api
-        run: npm install
-
       - name: Wait for MongoDB
         run: |
           sudo apt-get update

@@ -29,8 +29,13 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
+        working-directory: ./smallProjects/task_tracker_api
         run: npm install
-
+      
+      - name: Run dependencies
+        working-directory: ./smallProjects/recipe_manager_api
+        run: npm install
+        
       - name: Start MongoDB
         run: |
           docker run -d -p 27017:27017 --name mongo mongo:6.0

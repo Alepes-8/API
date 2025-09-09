@@ -17,11 +17,7 @@ jobs:
         image: mongo:6.0   # Docker image for MongoDB
         ports:
           - 27017:27017
-        options: > 
-          --health-cmd="mongosh --eval 'db.adminCommand(\"ping\")'" 
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
+
 
     steps:
       - name: Checkout repository
@@ -35,13 +31,16 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Wait for MongoDB to be ready
+      - name: Start MongoDB
+        run: |
+          docker run -d -p 27017:27017 --name mongo mongo:6.0
+
+      - name: Wait for MongoDB
         run: |
           until mongo --eval "print(\"MongoDB is ready\")"; do
             echo "Waiting for MongoDB..."
             sleep 5
           done
-          sleep 5  # Extra wait time to ensure MongoDB is fully ready
 
       - name: Start Task Tracker API
         working-directory: ./smallProjects/task_tracker_api

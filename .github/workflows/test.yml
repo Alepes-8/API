@@ -1,6 +1,7 @@
 name: CI for Task/Recipe APIs
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "main" ]
   pull_request:

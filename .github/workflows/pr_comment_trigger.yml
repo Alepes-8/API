@@ -1,0 +1,16 @@
+ name: PR Comment Triggered Workflow
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  rerun-tests:
+    if: github.event.issue.pull_request != null && contains(github.event.comment.body, '/rerun')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger workflow dispatch
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          event-type: rerun-ci

@@ -14,14 +14,9 @@ jobs:
     
     services:
       mongo:
-        image: mongo:5.0
+        image: mongo:6.0   # Use 6.0 if needed
         ports: ['27017:27017']
-        options: >-
-          --health-cmd="mongosh --eval 'db.adminCommand(\"ping\")'"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -31,34 +26,30 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install dependencies
+      - name: Install Task Tracker API dependencies
         working-directory: ./smallProjects/task_tracker_api
         run: npm install
       
-      - name: Run dependencies
+      - name: Install Recipe Manager API dependencies
         working-directory: ./smallProjects/recipe_manager_api
         run: npm install
-        
-      - name: Start MongoDB
-        run: |
-          docker run -d -p 27017:27017 --name mongo mongo:6.0
 
       - name: Wait for MongoDB
         run: |
-          until mongo --eval "print(\"MongoDB is ready\")"; do
+          until nc -z localhost 27017; do
             echo "Waiting for MongoDB..."
-            sleep 5
+            sleep 2
           done
 
       - name: Start Task Tracker API
         working-directory: ./smallProjects/task_tracker_api
-        run: /
+        run: |
           node server.js &
           sleep 10
 
       - name: Start Recipe Manager API
         working-directory: ./smallProjects/recipe_manager_api
-        run: /
+        run: |
           node server.js &
           sleep 10
 
@@ -66,7 +57,8 @@ jobs:
         working-directory: ./smallProjects/task_tracker_api
         run: |
           npm install -g newman
-          newman run postman/Task_tracker.postman_collection.json \ --environment postman/local.postman_environment.json
+          newman run postman/Task_tracker.postman_collection.json \
+          --environment postman/local.postman_environment.json
 
       - name: Run Recipe Manager API tests with Newman
         working-directory: ./smallProjects/recipe_manager_api

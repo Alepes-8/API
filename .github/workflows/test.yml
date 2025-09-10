@@ -60,7 +60,6 @@ jobs:
       - name: Wait for Task Tracker API
         working-directory: ./smallProjects/task_tracker_api
         run: |
-          npm install wait-on
           npx wait-on --timeout 60000 http://localhost:5001/api/health
 
       # Recipe Manager API

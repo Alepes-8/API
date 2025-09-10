@@ -63,10 +63,14 @@ jobs:
           sleep 5
           sudo lsof -i -P -n | grep LISTEN
 
+      - name: Test API Health manually
+        run: |
+          curl -v http://localhost:5000/api/recipes/health || true
+
       - name: Wait for Recipe Manager API
         working-directory: ./smallProjects/recipe_manager_api
         run: |
-          npx wait-on --timeout 60000 http://localhost:5000/api/health
+          npx wait-on --timeout 60000 http://localhost:5000/api/recipes/health
 
       # Task Tracker API
       - name: Install Task Tracker dependencies

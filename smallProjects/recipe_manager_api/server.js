@@ -47,7 +47,6 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 // MongoDB connection, database connection.
 console.log("🔗 Trying to connect to:", process.env.MONGO_URI);
 
-
 const MONGO_URI = process.env.MONGO_URI;
 if (!MONGO_URI) {
   console.error("❌ MONGO_URI is not defined");
@@ -57,8 +56,6 @@ if (!MONGO_URI) {
 mongoose.connect(MONGO_URI)
   .then(() => console.log("✅ MongoDB connected"))
   .catch(err => console.error(err));
-
-
 
 //Hook up recipe routes into server
 app.use("/api/recipes", recipeRoutes);

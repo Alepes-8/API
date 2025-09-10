@@ -1,5 +1,5 @@
 import express from 'express';
-import Task from '../models/task.js';
+import Task from "../models/Task.js";
 import auth from '../middleware/authMiddleware.js'
 
 const router = express.Router();
@@ -8,6 +8,7 @@ const router = express.Router();
 // So we call the database through the api, with possibly a req. That req is from the client
 // When the task is finished and some data is to be returned, that data is sent back through res(response to client)
 
+// Health check route - no auth required
 router.post('/', auth,  async (req, res) => {
     try{
         const task = new Task(req.body);

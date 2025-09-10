@@ -4,6 +4,11 @@ import Recipe from "../models/Recipe.js";
 const router = express.Router();
 
 // CREATE
+
+router.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
 router.post("/", async (req, res) => {
   try {
     const recipe = new Recipe(req.body);

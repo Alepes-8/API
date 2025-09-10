@@ -73,6 +73,13 @@ jobs:
         run: |
           npx wait-on --timeout 60000 http://localhost:5000/api/recipes/health
 
+      - name: Run Recipe Manager API tests with Newman
+        working-directory: ./smallProjects/recipe_manager_api
+        run: |
+          npm install newman
+          npx newman run postman/Recipe_Manager.postman_collection.json
+          npx newman run postman/Recipe_Manager_error_handling.postman_collection.json
+
       # Setup task_tracker_api
       - name: Install Task Tracker dependencies
         working-directory: ./smallProjects/task_tracker_api
@@ -83,7 +90,8 @@ jobs:
         env:
           MONGO_URI: mongodb://localhost:27017/task_tracker_api
         run: |
-          PORT=5001 node server.js > server.log 2>&1 &
+          export PORT=5001
+          node server.js > server.log 2>&1 &
 
       - name: Debug Task Tracker API startup
         working-directory: ./smallProjects/task_tracker_api
@@ -112,10 +120,3 @@ jobs:
           npm install newman
           npx newman run postman/Task_tracker.postman_collection.json \
             --environment postman/local.postman_environment.json
-
-      - name: Run Recipe Manager API tests with Newman
-        working-directory: ./smallProjects/recipe_manager_api
-        run: |
-          npm install newman
-          npx newman run postman/Recipe_Manager.postman_collection.json
-          npx newman run postman/Recipe_Manager_error_handling.postman_collection.json

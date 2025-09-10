@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "564787a0-0d84-4279-926f-61af2bf5fde0",
-		"name": "Task-Manager",
+		"name": "Task-tracker",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "47528263",
 		"_collection_link": "https://alepes-8-4770212.postman.co/workspace/API-Project-Tests~32327736-1e61-4437-8e92-ba70dd8a32f4/collection/47528263-564787a0-0d84-4279-926f-61af2bf5fde0?action=share&source=collection_link&creator=47528263"
@@ -126,30 +126,6 @@
 							],
 							"path": [
 								"get"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete User",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{baseAuthURL}}/delete/:id",
-							"host": [
-								"{{baseAuthURL}}"
-							],
-							"path": [
-								"delete",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "{{userId}}"
-								}
 							]
 						}
 					},
@@ -361,6 +337,35 @@
 								{
 									"key": "id",
 									"value": "{{taskId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete User",
+			"item": [
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseAuthURL}}/delete/:id",
+							"host": [
+								"{{baseAuthURL}}"
+							],
+							"path": [
+								"delete",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{userId}}"
 								}
 							]
 						}

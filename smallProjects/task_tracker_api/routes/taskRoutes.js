@@ -9,10 +9,6 @@ const router = express.Router();
 // When the task is finished and some data is to be returned, that data is sent back through res(response to client)
 
 // Health check route - no auth required
-router.get('/health', (req, res) => {
-  res.status(200).json({ status: 'ok' });
-});
-
 router.post('/', auth,  async (req, res) => {
     try{
         const task = new Task(req.body);

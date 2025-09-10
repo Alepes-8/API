@@ -5,6 +5,9 @@ import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
+router.get('/health', async(req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
 
 router.get("/get", async(req, res) => {
     try{
@@ -61,8 +64,5 @@ router.post("/login", async(req, res) => {
         res.status(500).json({error: "Server error" });
     }
 })
-
-
-
 
 export default router;

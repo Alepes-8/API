@@ -18,5 +18,5 @@ To run these tests locally, follow these steps:
 2. In the terminal, enter:
     `npm test`
     - This should show the tests running and then display the results.  
-        - Example of a successful test: ![alt text](image.png)  
-        - Example of a failed test: ![alt text](image-1.png)
+        - Example of a successful test: ![alt text](images/image-2.png)  
+        - Example of a failed test: ![alt text](images/image-1.png)

@@ -18,6 +18,7 @@
     "mongoose": "^8.17.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.10",
+    "mockingoose": "^2.16.2"
   }
 }

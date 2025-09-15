@@ -59,3 +59,5 @@ mongoose.connect(MONGO_URI)
 
 //Hook up recipe routes into server
 app.use("/api/recipes", recipeRoutes);
+
+export default app; // so Supertest can use it

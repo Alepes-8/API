@@ -3,6 +3,10 @@ import mockingoose from "mockingoose";
 import app from "../../../server.js";
 import Task from "../../../models/task.js";
 
+// taskRoutes.test.js
+// 🔹 Integration tests for the /api/tasks routes
+// Verifies route behavior (GET, POST, etc.) with mocked DB responses
+
 describe("Task Routes Integration Tests", () => {
 
   it("GET /api/tasks should return tasks array", async () => {

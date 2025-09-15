@@ -1,7 +1,11 @@
 import mockingoose from "mockingoose";
-import Task from "../models/task";
+import Task from "../../models/task.js";
 import request from "supertest";
-import app from "../server.js";
+import app from "../../server.js";
+
+// server.test.js
+// 🔹 Smoke test for the entire Express app
+// Ensures routes are mounted correctly and app-level middleware works
 
 describe("GET /api/tasks", () => {
   beforeEach(() => mockingoose.resetAll());

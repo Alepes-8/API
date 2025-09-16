@@ -81,3 +81,20 @@ jobs:
         with:
           name: task-tracker-coverage
           path: ./smallProjects/task_tracker_api/coverage
+
+            # Setup Task Tracker API for Jest tests
+      - name: Install Task Tracker dependencies
+        working-directory: ./smallProjects/task_tracker_api
+        run: npm install
+
+      - name: Run Jest tests for mini API for writing tests
+        working-directory: ./smallProjects/mini-api-for-writing-tests
+        run: |
+          npm test -- --coverage
+
+      - name: Upload mini API coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mini-api-coverage
+          path: ./smallProjects/mini-api-for-writing-tests/coverage

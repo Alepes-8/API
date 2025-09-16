@@ -1,0 +1,43 @@
+name: CI/CD Test for Jest
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    services:
+      mongo:
+        image: mongo:5.0
+        ports: ['27017:27017']
+        options: >-
+          --health-cmd="mongosh --eval 'db.adminCommand(\"ping\")'"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3 
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      
+      # Wait for MongoDB port to be ready
+      - name: Wait for MongoDB
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y netcat-openbsd
+          until nc -z localhost 27017; do
+            echo "Waiting for MongoDB..."
+            sleep 2
+          done
+        
+      # Setup recipie_manager_ap

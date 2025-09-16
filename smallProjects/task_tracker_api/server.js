@@ -37,3 +37,5 @@ mongoose.connect(MONGO_URI)
 //Hook up task routes into server from the routes/taskRoutes.js file
 app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
+
+export default app;

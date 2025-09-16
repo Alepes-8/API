@@ -1,4 +1,4 @@
-name: Jest CI
+name: CI/CD Test
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
+    
     services:
       mongo:
         image: mongo:5.0
@@ -41,43 +41,76 @@ jobs:
             sleep 2
           done
 
-      # Setup Recipe Manager API for Jest tests
+      # Setup recipie_manager_api
       - name: Install Recipe Manager dependencies
         working-directory: ./smallProjects/recipe_manager_api
         run: npm install
 
-      - name: Run Jest tests for Recipe Manager API
+      - name: Start Recipe Manager API
         working-directory: ./smallProjects/recipe_manager_api
         env:
           MONGO_URI: mongodb://localhost:27017/recipe_manager
-          PORT: 5000
         run: |
-          npm test -- --coverage
+          PORT=5000 node server.js > server.log 2>&1 &
 
-      - name: Upload Recipe Manager coverage report
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: recipe-manager-coverage
-          path: ./smallProjects/recipe_manager_api/coverage
+      - name: Debug Recipe Manager API startup
+        working-directory: ./smallProjects/recipe_manager_api
+        run: |
+          sleep 5
+          cat server.log
 
-      # Setup Task Tracker API for Jest tests
+      - name: Show listening ports
+        run: |
+          sleep 5
+          sudo lsof -i -P -n | grep LISTEN
+
+      - name: Test API Health manually
+        run: |
+          curl -v http://localhost:5000/api/recipes/health || true
+
+      - name: Wait for Recipe Manager API
+        working-directory: ./smallProjects/recipe_manager_api
+        run: |
+          npx wait-on --timeout 60000 http://localhost:5000/api/recipes/health
+
+      - name: Run Recipe Manager API tests with Newman
+        working-directory: ./smallProjects/recipe_manager_api
+        run: |
+          npm install newman
+          npx newman run postman/Recipe_Manager.postman_collection.json
+          npx newman run postman/Recipe_Manager_error_handling.postman_collection.json
+
+      # Setup task_tracker_api
       - name: Install Task Tracker dependencies
         working-directory: ./smallProjects/task_tracker_api
         run: npm install
 
-      - name: Run Jest tests for Task Tracker API
+      - name: Start Task Tracker API
         working-directory: ./smallProjects/task_tracker_api
         env:
           MONGO_URI: mongodb://localhost:27017/task_tracker_api
           PORT: 5001
-          JWT_SECRET: mysecretkey
-        run: |
-          npm test -- --coverage
+          JWT_SECRET: mysecretkey   # <--- important
+        run: |  #   possibnle add export PORT=5001
+          node server.js > server.log 2>&1 &
 
-      - name: Upload Task Tracker coverage report
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: task-tracker-coverage
-          path: ./smallProjects/task_tracker_api/coverage
+      - name: Debug Task Tracker API startup
+        working-directory: ./smallProjects/task_tracker_api
+        run: |
+          sleep 5
+          cat server.log
+
+      - name: Show listening ports
+        run: |
+          sleep 5
+          sudo lsof -i -P -n | grep LISTEN
+
+      - name: Test API Health manually
+        run: |
+          curl -v http://localhost:5001/api/auth/health || true
+
+      - name: Wait for Task Tracker API
+        working-directory: ./smallProjects/task_tracker_api
+        run: |
+          npx wait-on --timeout 60000 http://localhost:5001/api/auth/health
+          

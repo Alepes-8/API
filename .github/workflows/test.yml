@@ -121,3 +121,34 @@ jobs:
           npm install newman
           npx newman run postman/Task_tracker.postman_collection.json \
             --environment postman/local.postman_environment.json
+
+      - name: Run Jest tests for Task Tracker API
+        working-directory: ./smallProjects/task_tracker_api
+        env:
+          MONGO_URI: mongodb://localhost:27017/task_tracker_api
+          PORT: 5001
+          JWT_SECRET: mysecretkey
+        run: |
+          npm install
+          npm test -- --coverage
+      
+      - name: Upload Jest coverage report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report 
+
+      - name: Run Jest tests for Recipe Manager API
+        working-directory: ./smallProjects/recipe_manager_api
+        env:
+          MONGO_URI: mongodb://localhost:27017/recipe_manager
+          PORT: 5000
+        run: |
+          npm install
+          npm test -- --coverage
+      
+      - name: Upload Jest coverage report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report 

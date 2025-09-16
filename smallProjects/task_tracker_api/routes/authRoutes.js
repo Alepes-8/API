@@ -9,7 +9,7 @@ router.get('/health', async(req, res) => {
   res.status(200).json({ status: 'ok' });
 });
 
-router.get("/get", async(req, res) => {
+router.get("/get", async(req, res) => { // get all users TODO: remove in production
     try{
         const users = await User.find();
         res.json(users);

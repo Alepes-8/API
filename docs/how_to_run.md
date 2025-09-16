@@ -2,13 +2,32 @@
 
 The program contains different components, it contains the swagger, the apis, and the go file that runs the overall system. So in order to run it, we will need to run the correct elements. Note each API has their own running system 
 
+## Install dependencies
+
+In order to run any of the necessary small projects, it is important to download the respective dependencies for that project.  
+Each one can run independently from each other. However, if the goal is to present the code on Swagger UI, you are also responsible for setting up the Swagger UI part.
+
+1. Open a terminal and navigate to the project, or Swagger UI, that you want to set up.  
+2. Run `npm install` in the terminal.  
+   - This will install all the necessary dependencies for the project.
+
+### Install dev dependencies
+
+There are some differences between the dependencies that exist. Most importantly, some are set up for **development only**, as they are not required for the system to run in production. Instead, they are used for testing or other development activities.  
+
+These dependencies are separated into `devDependencies`. Running `npm install` will install both regular dependencies and dev dependencies. However, if you only want to install development dependencies, you can do the following:
+
+1. Open a terminal and navigate to the project, or Swagger UI, that you want to set up.  
+2. Run `npm install --only=dev` in the terminal.  
+
+
 ## The swagger-UI execution
 
 Running the swagger-UI will allow the user to open the local enivronments and examn the different entry points that exist.  However, that doesn't mean the entry points for each api represented is running, and avaliable, as they need to be started individually.
 
 - How to start the swagger-UI
     1. Open a terminal in the openAICheck folder
-    2. Enter "go run main.go" in the terminal
+    2. Enter `go run main.go` in the terminal
     3. Then open http://localhost:8080/docs/ in your browser
         - This should open up the swagger module and in turn should allow the user to verify the different apis.
 

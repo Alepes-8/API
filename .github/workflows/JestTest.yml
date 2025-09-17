@@ -1,0 +1,99 @@
+name: Jest CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mongo:
+        image: mongo:5.0
+        ports: ['27017:27017']
+        options: >-
+          --health-cmd="mongosh --eval 'db.adminCommand(\"ping\")'"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # Wait for MongoDB port to be ready
+      - name: Wait for MongoDB
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y netcat-openbsd
+          until nc -z localhost 27017; do
+            echo "Waiting for MongoDB..."
+            sleep 2
+          done
+
+      # Setup Recipe Manager API for Jest tests
+      - name: Install Recipe Manager dependencies
+        working-directory: ./smallProjects/recipe_manager_api
+        run: npm install
+
+      - name: Run Jest tests for Recipe Manager API
+        working-directory: ./smallProjects/recipe_manager_api
+        env:
+          MONGO_URI: mongodb://localhost:27017/recipe_manager
+          PORT: 5000
+        run: npm test -- --coverage
+
+      - name: Upload Recipe Manager coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: recipe-manager-coverage
+          path: ./smallProjects/recipe_manager_api/coverage
+          
+      # Setup Task Tracker API for Jest tests
+      - name: Install Task Tracker dependencies
+        working-directory: ./smallProjects/task_tracker_api
+        run: npm install
+
+      - name: Run Jest tests for Task Tracker API
+        working-directory: ./smallProjects/task_tracker_api
+        env:
+          MONGO_URI: mongodb://localhost:27017/task_tracker_api
+          PORT: 5001
+          JWT_SECRET: mysecretkey
+        run: npm test -- --coverage
+
+      - name: Upload Task Tracker coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: task-tracker-coverage
+          path: ./smallProjects/task_tracker_api/coverage
+
+      # Setup Mini API for Jest tests
+      - name: Install Mini API dependencies
+        working-directory: ./smallProjects/mini-api-for-writing-tests
+        run: |
+          npm install
+          npm install --save-dev jest supertest mockingoose cross-env
+
+      - name: Run Jest tests for Mini API
+        working-directory: ./smallProjects/mini-api-for-writing-tests
+        run: node --experimental-vm-modules ./node_modules/.bin/jest --coverage
+
+      - name: Upload Mini API coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mini-api-coverage
+          path: ./smallProjects/mini-api-for-writing-tests/coverage

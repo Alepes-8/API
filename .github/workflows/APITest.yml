@@ -113,11 +113,4 @@ jobs:
         working-directory: ./smallProjects/task_tracker_api
         run: |
           npx wait-on --timeout 60000 http://localhost:5001/api/auth/health
-
-      # Run API tests
-      - name: Run Task Tracker API tests with Newman
-        working-directory: ./smallProjects/task_tracker_api
-        run: |
-          npm install newman
-          npx newman run postman/Task_tracker.postman_collection.json \
-            --environment postman/local.postman_environment.json
+          

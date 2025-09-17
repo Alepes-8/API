@@ -89,7 +89,7 @@ jobs:
 
       - name: Run Jest tests for Mini API
         working-directory: ./smallProjects/mini-api-for-writing-tests
-        run: npx jest --coverage --experimental-vm-modules
+        run: node --experimental-vm-modules ./node_modules/.bin/jest --coverage
 
       - name: Upload Mini API coverage report
         if: always()

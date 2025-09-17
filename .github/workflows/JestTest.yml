@@ -51,8 +51,7 @@ jobs:
         env:
           MONGO_URI: mongodb://localhost:27017/recipe_manager
           PORT: 5000
-        run: |
-          npm test -- --coverage
+        run: npm test -- --coverage
 
       - name: Upload Recipe Manager coverage report
         if: always()
@@ -72,8 +71,7 @@ jobs:
           MONGO_URI: mongodb://localhost:27017/task_tracker_api
           PORT: 5001
           JWT_SECRET: mysecretkey
-        run: |
-          npm test
+        run: npm test -- --coverage
 
       - name: Upload Task Tracker coverage report
         if: always()
@@ -82,17 +80,18 @@ jobs:
           name: task-tracker-coverage
           path: ./smallProjects/task_tracker_api/coverage
 
-      # Setup Task Tracker API for Jest tests
-      - name: Install Task Tracker dependencies
-        working-directory: ./smallProjects/task_tracker_api
-        run: npm install
-
-      - name: Run Jest tests for mini API for writing tests
+      # Setup Mini API for Jest tests
+      - name: Install Mini API dependencies
         working-directory: ./smallProjects/mini-api-for-writing-tests
         run: |
-          npm test
+          npm install
+          npm install --save-dev jest supertest mockingoose cross-env
 
-      - name: Upload mini API coverage report
+      - name: Run Jest tests for Mini API
+        working-directory: ./smallProjects/mini-api-for-writing-tests
+        run: npx jest --coverage --experimental-vm-modules
+
+      - name: Upload Mini API coverage report
         if: always()
         uses: actions/upload-artifact@v4
         with:

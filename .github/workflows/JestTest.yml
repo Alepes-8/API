@@ -73,7 +73,7 @@ jobs:
           PORT: 5001
           JWT_SECRET: mysecretkey
         run: |
-          npm test -- --coverage
+          npm test
 
       - name: Upload Task Tracker coverage report
         if: always()
@@ -82,7 +82,7 @@ jobs:
           name: task-tracker-coverage
           path: ./smallProjects/task_tracker_api/coverage
 
-            # Setup Task Tracker API for Jest tests
+      # Setup Task Tracker API for Jest tests
       - name: Install Task Tracker dependencies
         working-directory: ./smallProjects/task_tracker_api
         run: npm install
@@ -90,7 +90,7 @@ jobs:
       - name: Run Jest tests for mini API for writing tests
         working-directory: ./smallProjects/mini-api-for-writing-tests
         run: |
-          npm test -- --coverage
+          npm test
 
       - name: Upload mini API coverage report
         if: always()

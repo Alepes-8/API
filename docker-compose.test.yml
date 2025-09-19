@@ -1,0 +1,34 @@
+version: "3.9"
+services:
+  mongo:
+    image: mongo:5.0
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  task_api:
+    build:
+      context: ./smallProjects/task_tracker_api
+    environment:
+      MONGO_URI: mongodb://mongo:27017/task_tracker_api
+      PORT: 5001
+      JWT_SECRET: mysecretkey
+    depends_on:
+      mongo:
+        condition: service_healthy
+    command: npm test -- --coverage
+
+  recipe_api:
+    build:
+      context: ./smallProjects/recipe_manager_api
+    environment:
+      MONGO_URI: mongodb://mongo:27017/recipe_manager
+      PORT: 5000
+    depends_on:
+      mongo:
+        condition: service_healthy
+    command: npm test -- --coverage

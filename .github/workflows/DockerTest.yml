@@ -1,0 +1,28 @@
+name: Dockerized CI Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  docker-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Run Dockerized Tests
+        run: |
+          # Build and start all services, stop all containers when one exits
+          docker-compose -f ../../docker-compose.test.yml up --build --abort-on-container-exit
+          
+          # Tear down containers and volumes after tests
+          docker-compose -f ../../docker-compose.test.yml down --volumes

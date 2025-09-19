@@ -4,9 +4,10 @@ The project is designed to be tested in multiple ways to increase stability and 
 
 ## CI/CD GitHub Actions
 
-The CI/CD setup uses Postman scripts that are created in Postman, exported, and added to the respective project’s own folder within a `postman` directory. This makes it easier to identify where each project's tests are located. To run the CI setup, it is important that the GitHub Action workflow is configured correctly, so it knows where to look and how to execute. To achieve this, a `.github` folder is created with a `workflows` subfolder. You can read more about this setup in `CI_CD_learn.md`.  
+The CI/CD setup uses Postman scripts that are created in Postman, exported, and added to the respective project’s own folder within a `postman` directory. Futher on, a `tests` directory is created in which unit tests, and integration testing are implemented. This makes it easier to identify where each project's tests are located, and what respective tests are responsible for. To run the CI setup, it is important that the GitHub Action workflow is configured correctly, so it knows where to look and how to execute. To achieve this, a `.github` folder is created with a `workflows` subfolder. You can read more about this setup in `CI_CD_learn.md`.  
 
 This setup ensures that the API tests are run automatically for each pull request. The actions do not run locally; they only run through GitHub Actions. However, if desired, the Postman scripts can still be run directly in Postman.
+
 
 ## Integration and Unit Testing
 

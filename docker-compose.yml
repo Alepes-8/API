@@ -35,6 +35,13 @@ services:
       - MONGO_URI=mongodb://mongo:27017/recipe_manager
     depends_on:
       - mongo
+  api:
+    build:
+      context: .           # project root
+      dockerfile: openAICheck/Dockerfile
+    container_name: go-api
+    ports:
+      - "8080:8080"
 
   task_tracker_tests:
     build: ./smallProjects/task_tracker_api

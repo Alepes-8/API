@@ -1,0 +1,69 @@
+version: "3.8"
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+  
+  task-tracker-api:
+    container_name: task-tracker-api
+    build:
+      context: ./smallProjects/task_tracker_api # The folder given to docker to work with
+      dockerfile: dockerfile  # The dockerfile to use, if not specified, it will look for a file named Dockerfile
+    ports:
+      - "5001:5001"
+    environment:
+      - PORT=5001
+      - MONGO_URI=mongodb://mongo:27017/task_tracker_api
+      - JWT_SECRET=db10ab081df057f582345a5365fbb43bfd5a65240a3c5329a288c4a4c1f4f976cd963f8aae79971a12701d031944d648c4368ea9988b392a6aabfc2637fc703d
+    depends_on:
+      - mongo
+
+  recipe_manager_api:
+    container_name: recipe-manager-api
+    build: 
+      context: ./smallProjects/recipe_manager_api
+      dockerfile: dockerfile
+    ports:
+      - "5000:5000" # Expose port 5000 for the Recipe Manager API where first 5000 is host and second 5000 is container
+    environment:
+      - PORT=5000
+      - MONGO_URI=mongodb://mongo:27017/recipe_manager
+    depends_on:
+      - mongo
+  swagger-ui:
+    build:
+      context: .           # project root
+      dockerfile: openAICheck/Dockerfile
+    container_name: swagger-ui
+    ports:
+      - "8080:8080"
+
+  task_tracker_tests:
+    build: ./smallProjects/task_tracker_api
+    command: npm test -- --coverage
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/task_tracker_api_test
+      - PORT=5001
+      - JWT_SECRET=mysecretkey
+    depends_on:
+      - mongo
+      - task-tracker-api
+
+  recipe_manager_tests:
+    build: ./smallProjects/recipe_manager_api
+    command: npm test -- --coverage
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/recipe_manager_test
+      - PORT=5000
+    depends_on:
+      - mongo
+      - recipe_manager_api
+  
+# Define named volumes for MongoDB data persistence
+volumes:
+  mongo-data:

@@ -1,6 +1,16 @@
 # How to run
 
-The program contains different components, it contains the swagger, the apis, and the go file that runs the overall system. So in order to run it, we will need to run the correct elements. Note each API has their own running system 
+The program contains different components, it contains the swagger, the apis, and the go file that runs the overall system. So in order to run it, we will need to run the correct elements. Note each API has their own running system. However, if desired to do so, you can follow the setup in the docker.md file, in order to run the envirnoment through docker containers instead.
+
+# Locally Through Docker
+
+If you want to run the system without performing major installations on your computer or worrying about dependencies, you can use Docker containers. This approach ensures that everything runs in isolated containers, making it easier to manage, update, or remove the system.
+
+To set it up, follow the **Setup** section in the `docker.md` file.
+
+# Locally Through Terminal
+
+If you prefer more control and easier development without using containers, the system can be run locally through the terminal. Follow these steps to set it up and run the project.
 
 ## Install dependencies
 

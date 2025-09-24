@@ -19,3 +19,42 @@ By using volumes, data is preserved even if containers are updated or replaced, 
 For each small project within this experimental setup, it is important that each project has its **own individual Docker setup**, rather than running one container setup for all projects at once.  
 
 This ensures that projects are independent of each other. For example, the `task_tracker` project can run without depending on whether `recipe_manager_api` is running or working correctly.
+
+## Setup
+
+When setting up the project, it can be setup without a docker setup, and can run localy on your computer without any issues. However, if so desired the system can be setup and ran on docker desktop. In order to do so it is nesusary to run the nessusary commands to set the system and docker envirnoment up. 
+
+1. Install docker desktop on your local system.
+2. Open docker desktop your local system
+2. while docker desktop is running, open a terminal in the root direktory of the api projekt
+3. write `docker-compose up --build ` and let the code run to completion.
+    - This will setup everything
+
+## Update
+
+When you make changes to the system and want to verify that it still works in the Docker environment, it is important to rebuild and restart the containers. Here are some useful commands:
+
+### Rebuild and start containers
+```bash
+    docker-compose up --build
+```
+### Stop running containers
+```bash
+    docker-compose down
+```     
+
+### Remove all containers, networks, and volumes (clean slate)
+```bash
+    docker-compose down -v --remove-orphans
+```
+
+### Rebuild a specific service
+```bash
+    docker-compose build <service_name>
+```
+
+### Start a specific service
+```bash
+    docker-compose up <service_name>
+```
+

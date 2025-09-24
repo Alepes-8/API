@@ -30,7 +30,11 @@ COPY ./swagger-ui/dist ./swagger-ui/dist
 # Copy OpenAPI YAML files (now inside openAICheck)
 COPY ./openAICheck/openapis ./openapis
 
-# Copy projects openapi files
+# Copy projects openapi files.
+# This is done in order to keep the pathing simular to local development while keeping them stored in the 
+# swagger-ui docker container.
+# If this wasn't done, the paths would need to be aquired through contacting the other containers, 
+# which would be more complex and less efficient.
 COPY ./smallProjects/recipe_manager_api/openapi.yaml ./smallProjects/recipe_manager_api/openapi.yaml
 COPY ./smallProjects/task_tracker_api/openapi.yaml ./smallProjects/task_tracker_api/openapi.yaml
 

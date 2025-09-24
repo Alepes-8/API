@@ -11,6 +11,7 @@ import (
 // 2. then open http://localhost:8080/docs/ in your browser
 // 3. This file serves the OpenAPI YAML file and Swagger UI for the Recipe Manager API
 
+// Check if running in Docker in order to adjsust file paths accordingly
 func runningInDocker() bool {
 	if _, err := os.Stat("/.dockerenv"); err == nil {
 		return true

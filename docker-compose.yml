@@ -35,11 +35,11 @@ services:
       - MONGO_URI=mongodb://mongo:27017/recipe_manager
     depends_on:
       - mongo
-  api:
+  swagger-ui:
     build:
       context: .           # project root
       dockerfile: openAICheck/Dockerfile
-    container_name: go-api
+    container_name: swagger-ui
     ports:
       - "8080:8080"
 

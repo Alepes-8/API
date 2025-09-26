@@ -8,8 +8,6 @@ on:
 jobs:
   docker:
     runs-on: ubuntu-latest
-    env:
-      OWNER: ${{ toLower(github.repository_owner) }}
     steps:  # Sets up the steps for the job, which is either a shell command such as npm install, or a pre-defined action from the GitHub Marketplace
       - name: Checkout code
         uses: actions/checkout@v3 # This is a built in github action that checks out your repository
@@ -19,7 +17,6 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          LOWER_OWNER=$(echo $OWNER | tr '[:upper:]' '[:lower:]')
-          docker build . -t ghcr.io/$LOWER_OWNER/my-api:latest
-          docker push ghcr.io/$LOWER_OWNER/my-api:latest
+          docker build . -t ghcr.io/alepes-8/my-api:latest
+          docker push ghcr.io/alepes-8/my-api:latest
 

@@ -8,6 +8,10 @@ This is the current look and content contained in the project(visualised by swag
 <img width="1192" height="1263" alt="bild" src="https://github.com/user-attachments/assets/084f35dd-83a9-4834-9be4-beb4b16328a3" />
 
 # How to setup and install.
+
+Follow the `docs/how_to_run.md` documentation as this describes the process that needs to be setup and installed.
+
+## Old Setup and installation
 1. Open a teminal where you desire to setup the project.
 2. run the following commands in the given order
     - https://github.com/Alepes-8/API.git
@@ -20,14 +24,14 @@ This is the current look and content contained in the project(visualised by swag
     - recipe_manager_api
 6. That env should contain the following information(the port and address can be adjusted based on your own desire. As well as the JWT_SECRET is something you should keep secret)
     - recipe_manager_api
-"
-PORT=5000
-MONGO_URI=mongodb://127.0.0.1:27017/recipe-manager
-"
+        ``` 
+        PORT=5000
+        MONGO_URI=mongodb://127.0.0.1:27017/recipe-manager
+        ```
     - task_tracker_api
-" 
-PORT=5001
-MONGO_URI=mongodb://127.0.0.1:27017/task_tracker
-JWT_SECRET=supersecret-task
-"
+        ``` 
+        PORT=5001
+        MONGO_URI=mongodb://127.0.0.1:27017/task_tracker
+        JWT_SECRET=supersecret-task
+        ```
 7. Follow the docs/how_to_run.md documentation in order to run it successfully.

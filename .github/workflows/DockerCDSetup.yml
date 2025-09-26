@@ -19,10 +19,12 @@ jobs:
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build and start services
-        run: docker-compose -f docker-compose.yml up --build -d
+        run: |
+          ls -la
+          docker-compose -f docker-compose.yml up --build -d
 
       - name: Run tests inside container
-        run: docker-compose -f docker-compose.yml exec api npm test
+        run: docker-compose -f docker/docker-compose.yml exec api npm test
 
       - name: Push API image
-        run: docker-compose -f docker-compose.yml push api
+        run: docker-compose -f docker/docker-compose.yml push api

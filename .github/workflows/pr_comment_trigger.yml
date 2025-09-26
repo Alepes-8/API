@@ -7,7 +7,7 @@ on:
 jobs:
   rerun-tests:
     if: github.event.issue.pull_request != null && contains(github.event.comment.body, '/rerun')
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Sets up a virtual machine to run the job on (ubuntu-latest, windows-latest, macos-latest)
     steps:
       - name: Trigger workflow dispatch
         uses: peter-evans/repository-dispatch@v3

@@ -1,0 +1,23 @@
+name: CD - Docker Setup for Deployment Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:  # Sets up the steps for the job, which is either a shell command such as npm install, or a pre-defined action from the GitHub Marketplace
+      - name: Checkout code
+        uses: actions/checkout@v3 # This is a built in github action that checks out your repository
+
+      - name: Log in to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build docker image
+        run: docker build . -t ghcr.io/${{ github.repository_owner }}/my-api:latest
+
+      - name: Push docker image
+        run: docker push ghcr.io/${{ github.repository_owner }}/my-api:latest

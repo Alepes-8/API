@@ -8,15 +8,21 @@ on:
 jobs:
   docker:
     runs-on: ubuntu-latest
-    steps:  # Sets up the steps for the job, which is either a shell command such as npm install, or a pre-defined action from the GitHub Marketplace
-      - name: Checkout code
-        uses: actions/checkout@v3 # This is a built in github action that checks out your repository
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
 
       - name: Log in to GHCR
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Build and push Docker image
-        run: |
-          docker build . -t ghcr.io/alepes-8/my-api:latest
-          docker push ghcr.io/alepes-8/my-api:latest
+      - name: Build and start services
+        run: docker-compose -f docker-compose.yml up --build -d
 
+      - name: Run tests inside container
+        run: docker-compose -f docker-compose.yml exec api npm test
+
+      - name: Push API image
+        run: docker-compose -f docker-compose.yml push api

@@ -13,7 +13,7 @@ services:
     container_name: task-tracker-api
     build:
       context: ./smallProjects/task_tracker_api # The folder given to docker to work with
-      dockerfile: dockerfile  # The dockerfile to use, if not specified, it will look for a file named Dockerfile
+      dockerfile: Dockerfile  # The dockerfile to use, if not specified, it will look for a file named Dockerfile
     ports:
       - "5001:5001"
     environment:
@@ -27,7 +27,7 @@ services:
     container_name: recipe-manager-api
     build: 
       context: ./smallProjects/recipe_manager_api
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
     ports:
       - "5000:5000" # Expose port 5000 for the Recipe Manager API where first 5000 is host and second 5000 is container
     environment:

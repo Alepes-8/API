@@ -12,6 +12,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # This could have been set to GITHUB_TOKEN, but I created a GHCR_PAT token instead for more granular control
+      # As this is a personal repository, I used my personal account to create the token where GITHUB_TOKEN would be for an origniastion.
       - name: Log in to GHCR
         run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 

@@ -35,8 +35,8 @@ COPY ./openAICheck/openapis ./openapis
 # swagger-ui docker container.
 # If this wasn't done, the paths would need to be aquired through contacting the other containers, 
 # which would be more complex and less efficient.
-#COPY ./smallProjects/recipe_manager_api/openapi.yaml ./smallProjects/recipe_manager_api/openapi.yaml
-#COPY ./smallProjects/task_tracker_api/openapi.yaml ./smallProjects/task_tracker_api/openapi.yaml
+COPY ./smallProjects/recipe_manager_api/openapi.yaml ./smallProjects/recipe_manager_api/openapi.yaml
+COPY ./smallProjects/task_tracker_api/openapi.yaml ./smallProjects/task_tracker_api/openapi.yaml
 
 EXPOSE 8080
 

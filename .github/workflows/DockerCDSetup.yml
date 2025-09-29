@@ -25,5 +25,5 @@ jobs:
           docker compose -f docker-compose.yml run --rm task_tracker_tests
           docker compose -f docker-compose.yml run --rm recipe_manager_tests
 
-      #- name: Push images to GHCR
-       # run: docker compose -f docker-compose.yml push
+      - name: Push images to GHCR
+        run: docker compose -f docker-compose.yml push
